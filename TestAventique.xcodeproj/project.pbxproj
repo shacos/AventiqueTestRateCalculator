@@ -35,16 +35,6 @@
 			path = TestAventique;
 			sourceTree = "<group>";
 		};
-		3797CFF72EDF5465002B9D45 /* TestAventiqueTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TestAventiqueTests;
-			sourceTree = "<group>";
-		};
-		3797D0012EDF5465002B9D45 /* TestAventiqueUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TestAventiqueUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				3797CFE92EDF5463002B9D45 /* TestAventique */,
-				3797CFF72EDF5465002B9D45 /* TestAventiqueTests */,
-				3797D0012EDF5465002B9D45 /* TestAventiqueUITests */,
 				3797CFE82EDF5463002B9D45 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +118,6 @@
 			dependencies = (
 				3797CFF62EDF5465002B9D45 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				3797CFF72EDF5465002B9D45 /* TestAventiqueTests */,
-			);
 			name = TestAventiqueTests;
 			packageProductDependencies = (
 			);
@@ -152,9 +137,6 @@
 			);
 			dependencies = (
 				3797D0002EDF5465002B9D45 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				3797D0012EDF5465002B9D45 /* TestAventiqueUITests */,
 			);
 			name = TestAventiqueUITests;
 			packageProductDependencies = (
