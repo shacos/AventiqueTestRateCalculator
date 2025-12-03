@@ -25,34 +25,24 @@ class CurrencyRate {
             setRate()
         }
     }
-    var rate: Double = 1.1
+    var rateValue = ratings[[.euro: .dollar]] ?? 1
+    var counterRateValue = ratings[[.dollar: .euro]] ?? 1
+    static let ratings: [[Currency: Currency]: Double] = [
+        [.euro: .dollar]: 1.5,
+        [.euro: .yenes]: 2.5,
+        [.dollar: .euro]: 0.5,
+        [.dollar: .yenes]: 2,
+        [.yenes: .euro]: 0.25,
+        [.yenes: .dollar]: 0.2,
+    ]
     
     func setRate() {
-        switch fromCurrency {
-        case .euro:
-            if toCurrency == .euro {
-                rate = 1.0
-            } else if toCurrency == .dollar {
-                rate = 1.1
-            } else {
-                rate = 160
-            }
-        case .dollar:
-            if toCurrency == .dollar {
-                rate = 1.0
-            } else if toCurrency == .euro {
-                rate = 0.9
-            } else {
-                rate = 130
-            }
-        case .yenes:
-            if toCurrency == .yenes {
-                rate = 1.0
-            } else if toCurrency == .euro {
-                rate = 0.94
-            } else {
-                rate = 0.97
-            }
+        if fromCurrency == toCurrency {
+            rateValue = 1
+            counterRateValue = 1
+            return
         }
+        rateValue = CurrencyRate.ratings[[fromCurrency: toCurrency]] ?? 1
+        counterRateValue = CurrencyRate.ratings[[toCurrency: fromCurrency]] ?? 1
     }
 }

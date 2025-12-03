@@ -24,7 +24,6 @@ struct PickerStyling: ViewModifier {
         content
             .labelsHidden()
             .tint(.white)
-            .padding(.leading, 100)
     }
 }
 
