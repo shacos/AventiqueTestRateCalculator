@@ -10,12 +10,11 @@ import SwiftUI
 struct ContentView: View {
 
     let currencies: [Currency] = [.euro, .dollar, .yenes]
-    enum PriceDirection { case price, toPrice }
+    enum LastFieldEdited: String { case price = "price", toPrice = "toPrice" }
 
     @State private var price: Double = 0
     @State private var toPrice: Double = 0
-    @FocusState private var fieldEdited: PriceDirection?
-    @FocusState private var pickerEdited: PriceDirection?
+    @FocusState private var fieldEdited: LastFieldEdited?
     @State private var currencyRate = CurrencyRate()
 
     var body: some View {
@@ -30,6 +29,7 @@ struct ContentView: View {
                         .keyboardType(.decimalPad)
                         .focused($fieldEdited, equals: .price)
                         .onChange(of: price) {
+                            print("first textfield fieldEdited: \(fieldEdited?.rawValue ?? "null")")
                             guard fieldEdited == .price else { return }
                             toPrice = price * currencyRate.rateValue
                         }
@@ -46,9 +46,8 @@ struct ContentView: View {
                             Text($0.rawValue)
                         }
                     }
-                    .focused($pickerEdited, equals: .price)
                     .onChange(of: currencyRate.fromCurrency) {
-                        toPrice = price * currencyRate.rateValue
+                        updateValuesAfterCurrencyChange(.price)
                     }
                     .pickerStyling()
                 }
@@ -60,6 +59,7 @@ struct ContentView: View {
                         .keyboardType(.decimalPad)
                         .focused($fieldEdited, equals: .toPrice)
                         .onChange(of: toPrice) {
+                            print("second textfield fieldEdited: \(fieldEdited?.rawValue ?? "null")")
                             guard fieldEdited == .toPrice else { return }
                             price = toPrice * currencyRate.counterRateValue
                         }
@@ -76,13 +76,25 @@ struct ContentView: View {
                             Text($0.rawValue)
                         }
                     }
-                    .focused($pickerEdited, equals: .toPrice)
                     .onChange(of: currencyRate.toCurrency) {
-                        price = toPrice * currencyRate.counterRateValue
+                        updateValuesAfterCurrencyChange(.toPrice)
                     }
                     .pickerStyling()
                 }
                 .box()
+            }
+        }
+    }
+
+    private func updateValuesAfterCurrencyChange(_ focused: LastFieldEdited) {
+        fieldEdited = nil
+        
+        DispatchQueue.main.async {
+            switch focused {
+            case .price:
+                toPrice = price * currencyRate.rateValue
+            case .toPrice:
+                price = toPrice * currencyRate.counterRateValue
             }
         }
     }
